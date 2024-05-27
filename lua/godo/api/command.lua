@@ -1,5 +1,6 @@
 local function GodoCreateItem( id, description )
-    vim.fn.jobstart( "godo create " .. id .. ' "' .. description .. '"' )
+    os.execute( "godo create " .. id .. ' "' .. description .. '"' )
+    vim.notify( "Item " .. id .. " created." )
 end
 
 vim.api.nvim_create_user_command( "GodoCreateItem", function(opts)
