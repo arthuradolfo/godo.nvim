@@ -18,7 +18,7 @@ function M.setup(config)
     vim.env.GODO = settings.current.install_root_dir
 
     if not fshelper.isdir(vim.env.GODO) then
-        os.execute( "mkdir " .. vim.env.GODO )
+        os.execute( "mkdir -p " .. vim.env.GODO )
     end
 
     if not depshelper.is_dep_installed( "go" ) then
@@ -26,11 +26,11 @@ function M.setup(config)
         return
     end
 
+    depshelper.set_gopath()
+
     if not depshelper.is_dep_installed( "godo" ) then
         os.execute( "go install github.com/gabrierlseibel1/godo@latest" )
     end
-
-    depshelper.set_gopath()
 
     require "godo.api.command"
     setup_autocmds()
