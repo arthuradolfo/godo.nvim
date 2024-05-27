@@ -1,10 +1,20 @@
+--- Parses description from fargs
+---@param args table
+local function parse_description( args )
+    local constructed_arg = ''
+    for i = 1,#args do
+        constructed_arg = constructed_arg . args[i] . ' '
+    end
+    return constructed_arg
+end
+
 local function GodoCreateItem( id, description )
     os.execute( "godo create " .. id .. ' "' .. description .. '"' )
     vim.notify( "Item `" .. id .. "` created." )
 end
 
 vim.api.nvim_create_user_command( "GodoCreateItem", function( opts )
-    GodoCreateItem( opts.fargs[1], opts.fargs[2] )
+    GodoCreateItem( opts.fargs[1], parse_description( opts.fargs ) )
 end, {
     desc = "Creates an item",
     nargs = "+",

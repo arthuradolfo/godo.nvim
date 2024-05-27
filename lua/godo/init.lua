@@ -10,9 +10,6 @@ local M = {}
 
 M.has_setup = false
 
-local function setup_autocmds()
-end
-
 ---@param config GodoSettings?
 function M.setup(config)
     if config then
@@ -37,7 +34,6 @@ function M.setup(config)
     end
 
     require "godo.api.command"
-    setup_autocmds()
     M.has_setup = true
 end
 
