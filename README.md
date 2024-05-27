@@ -137,4 +137,4 @@ end)
 
 ## Screencast
 
-![Example of usage](screencast.webm)
+![Example of usage](screencast.mov)
