@@ -3,7 +3,7 @@
 local function parse_description( args )
     local constructed_arg = ''
     for i = 1,#args do
-        constructed_arg = constructed_arg . args[i] . ' '
+        constructed_arg = constructed_arg .. args[i] .. ' '
     end
     return constructed_arg
 end
