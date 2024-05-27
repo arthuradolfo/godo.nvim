@@ -2,7 +2,7 @@ local settings	= require( "godo.settings" )
 local fshelper = require( "godo.utilities.fshelper" )
 local depshelper = require( "godo.utilities.depshelper" )
 
-if package.loaded[ "notify" ] then 
+if pcall(require, 'notify') then
     vim.notify = require( "notify" )
 end
 
