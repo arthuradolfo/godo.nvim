@@ -1,0 +1,1 @@
+# divoom.nvim
