@@ -73,7 +73,7 @@ end, {
 })
 
 local function GodoWorkItem( id, time )
-    os.execute( "godo work " .. id .. time )
+    os.execute( "godo work " .. id .. " " .. time )
     vim.notify( "Added " .. time .. " to item `" .. id .. "` work hours." )
 end
 
