@@ -8,6 +8,7 @@ function M.is_dep_installed(dependency)
 	local handle = io.popen( command )
 
 	if handle == nil then
+		vim.notify( "Error getting information about " .. dependency, "error" )
 		return false
 	end
 
@@ -22,6 +23,7 @@ function M.set_gopath()
 	local handle = io.popen( command )
 
 	if handle == nil then
+		vim.notify( "Error getting GOPATH environment variable.", "error" )
 		return false
 	end
 

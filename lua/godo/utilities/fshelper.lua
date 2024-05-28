@@ -20,4 +20,20 @@ function M.isdir(path)
    return M.exists(path.."/")
 end
 
+--- Execute command and print error message if error occurs
+---@param command string
+---@param message string
+---@return string
+function M.execute( command, message )
+    local handle = io.popen( command )
+
+    if handle == nil then
+		vim.notify( message, "error" )
+		return false
+	end
+
+    local result = handle:read( "*a" )
+    return result
+end
+
 return M

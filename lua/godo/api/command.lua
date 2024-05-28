@@ -1,3 +1,16 @@
+local fshelper = require( "godo.utilities.fshelper" )
+
+--- Check if command has error
+---@param message string
+---@return boolean
+local function has_error( message )
+    if string.find( message, "!BADKEY=\"not found\"" ) then
+        return true
+    else
+        return false
+    end
+end
+
 --- Parses description from fargs
 ---@param args table
 local function parse_description( args )
@@ -9,7 +22,14 @@ local function parse_description( args )
 end
 
 local function GodoCreateItem( id, description )
-    os.execute( "godo create " .. id .. ' "' .. description .. '"' )
+    local command = "godo create " .. id .. ' "' .. description .. '"'
+    local result = fshelper.execute( command, "Error creating item `" .. id "`." )
+
+    if has_error( result ) then
+        vim.notify( result, "error" )
+        return
+    end
+
     vim.notify( "Item `" .. id .. "` created." )
 end
 
@@ -22,8 +42,13 @@ end, {
 
 local function GodoGetItem( id )
     local command = "godo get " .. id
-    local handle = io.popen( command )
-    local result = handle:read( "*a" )
+    local result = fshelper.execute( command, "Error getting item `" .. id .. "`" )
+
+    if has_error( result ) then
+        vim.notify( "Item `" .. id .. "` not found.", "error" )
+        return
+    end
+
     vim.notify( result )
 end
 
@@ -36,8 +61,13 @@ end, {
 
 local function GodoListItems()
     local command = "godo list"
-    local handle = io.popen( command )
-    local result = handle:read( "*a" )
+    local result = fshelper.execute( command, "Error listing all items." )
+
+    if has_error( result ) then
+        vim.notify( result )
+        return
+    end
+
     vim.notify( result )
 end
 
@@ -59,7 +89,14 @@ end, {
 })
 
 local function GodoDoItem( id )
-    os.execute( "godo do " .. id )
+    local command = "godo do " .. id
+    local result = fshelper.execute( command, "Error doing item `" .. id .. "`." )
+
+    if has_error( result ) then
+        vim.notify( "Item `" .. id .. "` not found.", "error" )
+        return
+    end
+
     vim.notify( "Item `" .. id .. "` done." )
 end
 
@@ -71,7 +108,14 @@ end, {
 })
 
 local function GodoUndoItem( id )
-    os.execute( "godo undo " .. id )
+    local command = "godo undo " .. id
+    local result = fshelper.execute( command, "Error undoing item `" .. id .. "`." )
+
+    if has_error( result ) then
+        vim.notify( "Item `" .. id .. "` not found.", "error" )
+        return
+    end
+
     vim.notify( "Item `" .. id .. "` reopened." )
 end
 
@@ -83,7 +127,14 @@ end, {
 })
 
 local function GodoWorkItem( id, time )
-    os.execute( "godo work " .. id .. " " .. time )
+    local command = "godo work " .. id .. " " .. time
+    local result = fshelper.execute( command, "Error working on item `" .. id .. "`" )
+
+    if has_error( result ) then
+        vim.notify( "Item `" .. id .. "` not found.", "error" )
+        return
+    end
+
     vim.notify( "Added " .. time .. " to item `" .. id .. "` work hours." )
 end
 
