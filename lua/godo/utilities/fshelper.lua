@@ -25,7 +25,7 @@ end
 ---@param message string
 ---@return string
 function M.execute( command, message )
-    local handle = io.popen( command )
+    local handle = io.popen( command .. " 2>&1" )
 
     if handle == nil then
 		vim.notify( message, "error" )
