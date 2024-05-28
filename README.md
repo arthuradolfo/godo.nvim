@@ -138,6 +138,3 @@ vim.keymap.set( 'n', '<leader>gw', function()
 	end)
 end)
 ```
-
-## Screencast
-
