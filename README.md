@@ -137,4 +137,4 @@ end)
 
 ## Screencast
 
-![Example of usage](screencast.mov)
+![Example of usage](screencast.gif)
