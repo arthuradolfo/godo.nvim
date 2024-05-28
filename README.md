@@ -1,5 +1,9 @@
 # godo.nvim
 
+Integrate [godo](https://github.com/gabrielseibel1/godo) with your Neovim.
+
+![](screencast.gif)
+
 ## Requirements
 
 - Works only on Linux flavors
@@ -137,4 +141,3 @@ end)
 
 ## Screencast
 
-![Example of usage](screencast.gif)
