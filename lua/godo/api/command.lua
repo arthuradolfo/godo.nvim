@@ -23,7 +23,7 @@ end
 
 local function GodoCreateItem( id, description )
     local command = "godo create " .. id .. ' "' .. description .. '"'
-    local result = fshelper.execute( command, "Error creating item `" .. id "`." )
+    local result = fshelper.execute( command, "Error creating item `" .. id .. "`." )
 
     if has_error( result ) then
         vim.notify( result, "error" )
