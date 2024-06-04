@@ -34,7 +34,7 @@ function M.set_gopath()
 	vim.env.PATH = vim.env.PATH .. ':' .. result:gsub( '[\n\r]', '' ) .. '/bin'
 end
 
-function M.check_godo_version()
+function M.is_godo_version_latest_supported()
 	local command = "godo version"
 	local handle = io.popen( command )
 
