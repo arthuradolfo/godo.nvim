@@ -1,3 +1,5 @@
+local settings = require( "godo.settings" )
+
 local M = {}
 
 --- Check if dependency is installed on system
@@ -30,6 +32,20 @@ function M.set_gopath()
 	local result = handle:read( "*a" )
 	handle:close()
 	vim.env.PATH = vim.env.PATH .. ':' .. result:gsub( '[\n\r]', '' ) .. '/bin'
+end
+
+function M.check_godo_version()
+	local command = "godo version"
+	local handle = io.popen( command )
+
+	if handle == nil then
+		vim.notify( "Error getting godo version", "error" )
+		return false
+	end
+
+	local result = handle:read( "*a" )
+	handle:close()
+	return not( result == settings.godo_version .. "\n" )
 end
 
 return M
