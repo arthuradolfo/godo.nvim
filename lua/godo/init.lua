@@ -50,7 +50,7 @@ function M.setup(config)
     if not depshelper.is_dep_installed( "godo" )
         or not depshelper.is_godo_version_latest_supported() then
         os.execute( 
-            "go install github.com/gabrierlseibel1/godo@" .. settings.godo_version
+            "go install github.com/gabrielseibel1/godo@" .. settings.godo_version
         )
     end
 
