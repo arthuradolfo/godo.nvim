@@ -145,6 +145,52 @@ end, {
     nargs = "+"
 })
 
+local function parse_items( args )
+    local items = ''
+    for i = 1, #args - 1 do
+        items = items .. args[i] .. ' '
+    end
+    return items
+end
+
+local function GodoTagItems( items, tag )
+    local command = "godo tag " .. items .. tag .. ''
+    local result = fshelper.execute( command, "Error tagging items `" .. items .. "`." )
+
+    if has_error( result ) then
+        vim.notify( result, "error" )
+        return
+    end
+
+    vim.notify( "Items `" .. items .. "` tagged with " .. tag ..  "." )
+end
+
+vim.api.nvim_create_user_command( "GodoTagItems", function( opts )
+    GodoTagItems( parse_items( opts.fargs ), opts.fargs[ #opts.fargs ] )
+end, {
+    desc = "Tags a set of items",
+    nargs = "+",
+})
+
+local function GodoUntagItems( items, tag )
+    local command = "godo untag " .. items .. tag .. ''
+    local result = fshelper.execute( command, "Error untagging items `" .. items .. "`." )
+
+    if has_error( result ) then
+        vim.notify( result, "error" )
+        return
+    end
+
+    vim.notify( "Items `" .. items .. "` untagged from " .. tag ..  "." )
+end
+
+vim.api.nvim_create_user_command( "GodoUntagItems", function( opts )
+    GodoUntagItems( parse_items( opts.fargs ), opts.fargs[ #opts.fargs ] )
+end, {
+    desc = "Untags a set of items",
+    nargs = "+",
+})
+
 local function Godo()
     vim.cmd( "belowright vsplit +term" )
     vim.api.nvim_input('igodo<cr>')
