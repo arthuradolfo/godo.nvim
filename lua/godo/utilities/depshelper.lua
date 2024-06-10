@@ -47,7 +47,7 @@ function M.is_godo_version_latest_supported()
 
 	local result = handle:read( "*a" )
 	handle:close()
-	return not( result == settings.godo_version .. "\n" )
+	return result == settings.godo_version .. "\n"
 end
 
 return M
