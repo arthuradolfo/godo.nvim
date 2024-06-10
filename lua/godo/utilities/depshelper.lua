@@ -6,7 +6,9 @@ local M = {}
 ---@param dependency string
 ---@return boolean
 function M.is_dep_installed(dependency)
-	local command = "command -v " .. dependency .. " >/dev/null 2>&1 || echo 'Not found'"
+	local command = "command -v " .. dependency ..
+		" >/dev/null 2>&1 || echo 'Not found'"
+
 	local handle = io.popen( command )
 
 	if handle == nil then

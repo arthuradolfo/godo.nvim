@@ -1,4 +1,6 @@
 local fshelper = require( "godo.utilities.fshelper" )
+local parser = require( "godo.utilities.parser" )
+local window = require( "godo.utilities.window" )
 
 --- Check if command has error
 ---@param message string
@@ -23,7 +25,11 @@ end
 
 local function GodoCreateItem( id, description )
     local command = "godo create " .. id .. ' "' .. description .. '"'
-    local result = fshelper.execute( command, "Error creating item `" .. id .. "`." )
+
+    local result = fshelper.execute(
+        command,
+        "Error creating item `" .. id .. "`."
+    )
 
     if has_error( result ) then
         vim.notify( result, "error" )
@@ -42,7 +48,11 @@ end, {
 
 local function GodoGetItem( id )
     local command = "godo get " .. id
-    local result = fshelper.execute( command, "Error getting item `" .. id .. "`" )
+
+    local result = fshelper.execute(
+        command,
+        "Error getting item `" .. id .. "`"
+    )
 
     if has_error( result ) then
         vim.notify( "Item `" .. id .. "` not found.", "error" )
@@ -90,7 +100,11 @@ end, {
 
 local function GodoDoItem( id )
     local command = "godo do " .. id
-    local result = fshelper.execute( command, "Error doing item `" .. id .. "`." )
+
+    local result = fshelper.execute(
+        command,
+        "Error doing item `" .. id .. "`."
+    )
 
     if has_error( result ) then
         vim.notify( "Item `" .. id .. "` not found.", "error" )
@@ -128,7 +142,11 @@ end, {
 
 local function GodoWorkItem( id, time )
     local command = "godo work " .. id .. " " .. time
-    local result = fshelper.execute( command, "Error working on item `" .. id .. "`" )
+
+    local result = fshelper.execute(
+        command,
+        "Error working on item `" .. id .. "`"
+    )
 
     if has_error( result ) then
         vim.notify( "Item `" .. id .. "` not found.", "error" )
@@ -155,7 +173,11 @@ end
 
 local function GodoTagItems( items, tag )
     local command = "godo tag " .. items .. tag .. ''
-    local result = fshelper.execute( command, "Error tagging items `" .. items .. "`." )
+
+    local result = fshelper.execute(
+        command,
+        "Error tagging items `" .. items .. "`."
+    )
 
     if has_error( result ) then
         vim.notify( result, "error" )
@@ -174,7 +196,11 @@ end, {
 
 local function GodoUntagItems( items, tag )
     local command = "godo untag " .. items .. tag .. ''
-    local result = fshelper.execute( command, "Error untagging items `" .. items .. "`." )
+
+    local result = fshelper.execute(
+        command,
+        "Error untagging items `" .. items .. "`."
+    )
 
     if has_error( result ) then
         vim.notify( result, "error" )
@@ -189,6 +215,19 @@ vim.api.nvim_create_user_command( "GodoUntagItems", function( opts )
 end, {
     desc = "Untags a set of items",
     nargs = "+",
+})
+
+local function GodoParseFile()
+    local godo_list = parser.extract_godos()
+    window.set_godo_list( godo_list )
+    window.create_floating_window()
+end
+
+vim.api.nvim_create_user_command( "GodoParseFile", function()
+    GodoParseFile()
+end, {
+    desc = "Parses current file to find TODOs",
+    nargs = 0
 })
 
 local function Godo()

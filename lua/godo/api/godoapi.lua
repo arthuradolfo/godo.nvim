@@ -13,15 +13,30 @@ local function has_error( message )
     end
 end
 
-function M.check_item_exists( id )
+local function check_item_exists( id )
     local command = "godo get " .. id
-    local result = fshelper.execute( command, "Error getting item `" .. id .. "`" )
+
+    local result = fshelper.execute(
+        command,
+        "Error getting item `" .. id .. "`"
+    )
 
     if has_error( result ) then
         return false
     end
 
     return true
+end
+
+function M.create_godos( godo_list )
+	for _, godo in pairs( godo_list ) do
+		if not check_item_exists( godo.id ) then
+			vim.cmd.GodoCreateItem( godo.id, godo.description )
+            for _, tag in ipairs( godo.tags ) do
+                vim.cmd.GodoTagItems( godo.id, tag )
+            end
+		end
+	end
 end
 
 return M

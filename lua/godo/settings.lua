@@ -13,10 +13,6 @@ local DEFAULT_SETTINGS = {
 	log_file = table.concat(
 		{ vim.fn.stdpath "data", "/godo.nvim", "/log", "/log.txt" }
 	),
-
-	---@since 1.0.0
-	--- Boolean to enable/disable parsing of TODO comments
-	parse_todo_file = false
 }
 
 M.DEFAULT_SETTINGS = DEFAULT_SETTINGS
