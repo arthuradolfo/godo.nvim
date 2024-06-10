@@ -17,7 +17,7 @@ local DEFAULT_SETTINGS = {
 
 M.DEFAULT_SETTINGS = DEFAULT_SETTINGS
 M.current = DEFAULT_SETTINGS
-M.godo_version = "v0.2.0"
+M.godo_version = "v0.2.1"
 
 ---@param opts GodoSettings
 function M.set(opts)
