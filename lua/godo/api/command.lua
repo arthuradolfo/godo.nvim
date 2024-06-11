@@ -6,7 +6,9 @@ local window = require( "godo.utilities.window" )
 ---@param message string
 ---@return boolean
 local function has_error( message )
-    if string.find( message, "!BADKEY=\"not found\"" ) then
+    if message:find( "!BADKEY=\"not found\"" ) then
+        return true
+    elseif message:find( ".godo/godo.json: no such file or directory" ) then
         return true
     else
         return false
@@ -227,6 +229,29 @@ vim.api.nvim_create_user_command( "GodoParseFile", function()
     GodoParseFile()
 end, {
     desc = "Parses current file to find TODOs",
+    nargs = 0
+})
+
+local function GodoInit()
+    local command = "godo init"
+
+    local result = fshelper.execute(
+        command,
+        "Error initializing godo repository."
+    )
+
+    if has_error( result ) then
+        vim.notify( result, "error" )
+        return
+    end
+
+    vim.notify( "Godo repository initialized successfully." )
+end
+
+vim.api.nvim_create_user_command( "GodoInit", function()
+    GodoInit()
+end, {
+    desc = "Initializes a godo repository",
     nargs = 0
 })
 
